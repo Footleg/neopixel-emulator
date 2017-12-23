@@ -76,16 +76,16 @@ class Neopixel_Emulator(object):
     
     def initialiseLEDCircle(self, num):
         """ Set LED positions in a circle """
-        LEDsize = int( 250 / num )
-        radius = int( num * 2 )
+        LEDsize = int( 20 / num ) + 10
+        radius = int( num * 10 )
         
         #Position LEDs in a circle
         for i in range(0,num):
-            angleRad = i * 2 * math.pi / num
-            x = int( radius * math.sinh( angleRad ) + self._width / 2 )
-            y = int( radius * math.cosh( angleRad ) + self._height / 2 )
+            angleRad = math.pi - (i * 2 * math.pi / num)
+            x = int( radius * math.sin( angleRad ) + self._width / 2 )
+            y = int( radius * math.cos( angleRad ) + self._height / 2 )
             self._led_pos.append( [x,y] )
-            pygame.draw.circle(self.screen, (int(255 * i / num),0,0), (x,y), LEDsize)
+            pygame.draw.circle(self.screen, (int(155 * i / num)+100,0,0), (x,y), LEDsize)
 
         # Update the screen 
         pygame.display.flip()
@@ -147,7 +147,7 @@ class Neopixel_Emulator(object):
 def main():
     
     # LED strip configuration:
-    LED_COUNT      = 16      # Number of LED pixels.
+    LED_COUNT      = 24      # Number of LED pixels.
     LED_PIN        = 18      # GPIO pin connected to the pixels (18 uses PWM!).
     #LED_PIN        = 10      # GPIO pin connected to the pixels (10 uses SPI /dev/spidev0.0).
     LED_FREQ_HZ    = 800000  # LED signal frequency in hertz (usually 800khz)
